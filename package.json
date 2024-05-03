@@ -1,0 +1,11 @@
+{
+  "name": "date-planner-project",
+  "version": "1.0.0",
+  "description": "교대 근무 데이트 플랜 서비스",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
