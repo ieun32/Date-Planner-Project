@@ -3,9 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>교대 근무 커플 데이터 플래너</title>
 </head>
 <body>
-  
+  <header class="header">
+    <h1 class="header__h1">교대 근무 커플의</h1>
+    <h1 class="header__h1">두근 두근 데이트 플래너</h1>
+  </header>
+  <main class="main">
+    <section class="chooser">
+      <label class="chooser__label chooser__label--boyfriend">남자친구</label>
+      <select class="chooser__select chooser__select--boyfriend">
+        <option value="day shift">주간 근무</option>
+        <option value="two shift">3조 2교대</option>
+        <option value="three shift">5조 3교대</option>
+      </select>
+      <label class="chooser__label chooser__label--girlfriend">여자친구</label>
+      <select class="chooser__select chooser__select--girlfriend">
+        <option value="day shift">주간 근무</option>
+        <option value="two shift">3조 2교대</option>
+        <option value="three shift">5조 3교대</option>
+      </select>
+    </section>
+
+    <section class="calender">
+      <div>일</div>
+      <div>월</div>
+      <div>화</div>
+      <div>수</div>
+      <div>목</div>
+      <div>금</div>
+      <div>토</div>
+    </section>
+  </main>
+  <script src="./dist/main.js" ></script>
 </body>
 </html>
