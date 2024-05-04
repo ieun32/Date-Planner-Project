@@ -4,13 +4,15 @@
   "description": "교대 근무 데이트 플랜 서비스",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --open",
-    "build": "webpack",
+    "start": "webpack serve --open --mode=development",
+    "build": "webpack --mode=production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "css-loader": "^7.1.1",
+    "style-loader": "^4.0.0",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4"
