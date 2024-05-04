@@ -7,7 +7,15 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist')
   },
-  plugins: [new HtmlWebpackPlugin({
-    template: './index.html'
-  })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './index.html'
+    })
+  ],
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist')
+    },
+    port: 8080,
+  }
 }
