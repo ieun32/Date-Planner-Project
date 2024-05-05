@@ -1,44 +1,64 @@
 import "./styles/style.css";
 import * as tags from "./constants/tags";
+import { dayShift, twoShift, threeShift } from "./constants/schedule";
 
+import DatePlanner from "./utils/datePlanner";
+import HighLighter from "./utils/highlighter";
 class App {
-  boyfriend = "";
-  girlfriend = "";
+  constructor({ datePlanner, highLighter }) {
+    this.boyfriend = dayShift;
+    this.girlfriend = dayShift;
+    this.days = [];
 
-  constructor() {
-    tags.$boyfriendChooser.addEventListener(
-      "change",
-      this.selectHandler.bind(this, "boyfriend"),
+    this.DatePlanner = datePlanner;
+    this.HighLighter = highLighter;
+
+    // 셀렉트 이벤트 리스너 등록 (남친, 여친 근무표 업데이트)
+    tags.$boyfriendChooser.addEventListener("change", (event) =>
+      this.selectHandler(event, "boyfriend"),
     );
 
-    tags.$girlfriendChooser.addEventListener(
-      "change",
-      this.selectHandler.bind(this, "girlfriend"),
+    tags.$girlfriendChooser.addEventListener("change", (event) =>
+      this.selectHandler(event, "girlfriend"),
     );
 
-    tags.$checkDateButton.addEventListener("click", this.clickHandler);
+    // 버튼 이벤트 리스너 등록 (데이트 가능 날짜 계산 후 하이라이팅)
+    tags.$checkDateButton.addEventListener("click", () => {
+      const days = this.DatePlanner.findDay({
+        boyfriend: this.boyfriend,
+        girlfriend: this.girlfriend,
+      });
+
+      console.log(days);
+
+      this.HighLighter.initialClassName();
+      this.HighLighter.addClassName(days);
+    });
   }
 
-  selectHandler(type, event) {
+  /**
+   * 셀렉트 이벤트 핸들러
+   * @param {Event} event 이벤트 객체
+   * @param {string} chooserType 남친, 여친 여부
+   */
+  selectHandler(event, chooserType) {
     switch (event.target.value) {
-      case "day shift":
-        if (type === "boyfriend") this.boyfriend = "day shift";
-        if (type === "girlfriend") this.boyfriend = "day shift";
+      case "dayShift":
+        if (chooserType === "boyfriend") this.boyfriend = dayShift;
+        if (chooserType === "girlfriend") this.girlfriend = dayShift;
         break;
-      case "two shift":
-        if (type === "boyfriend") this.boyfriend = "two shift";
-        if (type === "girlfriend") this.boyfriend = "two shift";
+      case "twoShift":
+        if (chooserType === "boyfriend") this.boyfriend = twoShift;
+        if (chooserType === "girlfriend") this.girlfriend = twoShift;
         break;
-      case "three shift":
-        if (type === "boyfriend") this.boyfriend = "three shift";
-        if (type === "girlfriend") this.boyfriend = "three shift";
+      case "threeShift":
+        if (chooserType === "boyfriend") this.boyfriend = threeShift;
+        if (chooserType === "girlfriend") this.girlfriend = threeShift;
         break;
     }
   }
-
-  clickHandler() {
-    console.log("버튼 눌렀다잉");
-  }
 }
 
-new App();
+const datePlanner = new DatePlanner();
+const highLighter = new HighLighter();
+new App({ datePlanner: datePlanner, highLighter: highLighter });

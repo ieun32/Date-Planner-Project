@@ -3,6 +3,8 @@
   --color-pampas: #F6F5F2;
   --color-pearl: #F0EBE3;
   --color-double-pearl: #E7DFD2;
+  --color-highlight: #FFFBDA;
+  --color-double-highlight: #FFEC9E;
 }
 
 * {
@@ -41,6 +43,7 @@ ul {
 button {
   cursor: pointer;
 }
+
 
 .chooser {
   display: flex;
@@ -114,11 +117,20 @@ button {
 
 .calender__item--body {
   display: flex;
+  flex-direction: column;
   justify-content: start;
   align-items: start;
   padding: 0.5rem;
   height: 4.5rem;
   background-color: var(--color-white)
+}
+
+.calender__item--body-highlight {
+  background-color: var(--color-highlight);
+}
+
+.calender__item--body-double-highlight {
+  background-color: var(--color-double-highlight);
 }
 
 .calender__item--body:hover {
