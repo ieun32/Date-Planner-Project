@@ -34,6 +34,13 @@ class App {
       this.HighLighter.initialClassName();
       this.HighLighter.addClassName(days);
     });
+
+    // 날짜 태그 이벤트 리스너 등록 (메모 받기 위함)
+    tags.$calenderBodyItems.forEach((item) => {
+      item.addEventListener("click", (event) => {
+        console.log(event.target.childNodes);
+      });
+    });
   }
 
   /**
