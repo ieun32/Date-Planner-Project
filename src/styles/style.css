@@ -5,30 +5,19 @@
   --color-double-pearl: #E7DFD2;
   --color-highlight: #FFFBDA;
   --color-double-highlight: #FFEC9E;
+  --color-blue: lightblue;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  height: 100%;
+.container {
+  height: 100vh;
   width: 100%;
-  font-size: 16px;
-  background-color: var(--color-pampas);
-}
-
-body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
 }
 
-header {
+.header {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,15 +25,31 @@ header {
   margin-bottom: 2rem;
 }
 
-ul {
-  list-style: none;
+.header__title {
+  font-size: 2rem;
+  font-weight: 800;
 }
 
-button {
-  cursor: pointer;
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+}
+
+.main__util {
+  display: flex;
+  flex-direction: column;
+}
+
+.main__memo {
+  margin-left: 5rem;
+  margin-top: 4rem;
 }
 
 
+
+/* 셀렉터: 근무표 셀렉터 */
 .chooser {
   display: flex;
   flex-direction: row;
@@ -90,8 +95,28 @@ button {
   background-color: var(--color-pampas);
 }
 
-
+/* 캘린더 */
 .calender__head {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.calender__head--prev {
+  margin-right: 1rem;
+}
+
+.calender__head--next {
+  margin-left: 1rem;
+}
+
+.calender__head--today {
+  margin-left: 8rem;
+}
+
+.calender__mid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   width: 40rem;
@@ -107,11 +132,11 @@ button {
   border: 1px solid var(--color-pearl);
 }
 
-.calender__item--head {
+.calender__item--mid {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 3rem;
+  height: 2rem;
   background-color: var(--color-double-pearl);
 }
 
@@ -122,9 +147,82 @@ button {
   align-items: start;
   padding: 0.5rem;
   height: 4.5rem;
-  background-color: var(--color-white)
 }
 
+.calender__item--other {
+  opacity: 0.3;
+}
+
+.calender__item--active {
+  position: relative;
+  color: var(--color-white);
+}
+
+.calender__item--active::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  display: block;
+  background-color: black;
+  z-index: -1;
+  content: '';
+  border-radius: 1rem;
+}
+
+/* 메모 */
+.memo {
+  display: absolute;
+  top: 30%;
+  right: 30%;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+.memo__head {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.memo__head--title {
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.memo__body {
+  display: flex;
+  flex-direction: column;
+  justify-self: start;
+}
+
+.memo__body--save-button {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.5rem 0 0.5rem 0;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--color-pearl);
+  cursor: pointer;
+}
+
+.memo__body--save-button:hover {
+  background-color: var(--color-double-pearl);
+}
+
+.memo__body--save-button:active {
+  background-color: var(--color-double-pearl);
+}
+
+/* 하이라이팅 */
 .calender__item--body-highlight {
   background-color: var(--color-highlight);
 }
