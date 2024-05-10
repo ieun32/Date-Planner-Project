@@ -76,8 +76,11 @@ export default class Calendar {
     return dates;
   }
 
-  // 현재 날짜 정보를 주입 받고 이후 날짜 정보를 초기화 함수에 다시 주입한다.
-  // 초기화 함수는 주입받은 날짜를 기준으로 UI를 변경해준다.
+  /**
+   * 날짜를 이전 달로 변경하고 캘린더에 반영한 뒤 날짜 객체를 반환하는 메서드
+   * @param {Date} date 현재 날짜
+   * @returns 변경된 날짜 객체
+   */
   static prevMonth(date) {
     const prevMonth = date.setMonth(date.getMonth() - 1);
     const prevDate = new Date(prevMonth);
@@ -85,6 +88,11 @@ export default class Calendar {
     return prevDate;
   }
 
+  /**
+   * 날짜를 다음 달로 변경하고 캘린더에 반영한 뒤 날짜 객체를 반환하는 메서드
+   * @param {Date} date 현재 날짜
+   * @returns 변경된 날짜 객체
+   */
   static nextMonth(date) {
     const nextMonth = date.setMonth(date.getMonth() + 1);
     const nextDate = new Date(nextMonth);
@@ -92,6 +100,9 @@ export default class Calendar {
     return nextDate;
   }
 
+  /**
+   * 이번 달로 날짜 변경하고 캘린더에 반영하는 메서드
+   */
   static goToday() {
     Calendar.initial(new Date());
   }
