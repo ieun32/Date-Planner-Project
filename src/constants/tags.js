@@ -17,3 +17,5 @@ export const $nextButton = document.querySelector(".calender__head--next");
 export const $todayButton = document.querySelector(".calender__head--today");
 export const $thisDays = document.querySelectorAll(".calender__item--this");
 export const $memoDate = document.querySelector(".memo__head--date");
+export const $memoSaveBtn = document.querySelector(".memo__body--save-button");
+export const $memoInput = document.querySelector(".memo__body--input");

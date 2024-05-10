@@ -1,4 +1,5 @@
 import CalendarView from "./calenderView";
+import LocalStorage from "./localstorage";
 
 export default class Calendar {
   /**
@@ -16,20 +17,33 @@ export default class Calendar {
       new Date(viewYear, viewMonth + 1, 0).getDate(),
     );
 
+    // 캘린더 뷰 업데이트
     CalendarView.setHead(viewYear, viewMonth);
     CalendarView.setMemoDate(viewYear, viewMonth, new Date().getDate());
     CalendarView.setDates(dates, firstDateIndex, lastDateIndex);
     CalendarView.setActiveDates(viewYear, viewMonth);
 
-    // 날짜 태그 이벤트 리스너 등록
-    // updatedom util 필요 dom 요소가 생성, 삭제될 때마다 업데이트 필요한 tags 업데이트
+    // 메모 관련 캘린더 뷰 업데이트
+    const list = Calendar.getDatesOfMemo(date);
+    CalendarView.displayMemoDates(list);
+
+    // 날짜 클릭 이벤트 리스너 등록
+    // 해당 날짜 활성화, 메모 불러오기
     document.querySelectorAll(".calender__item--body").forEach((item) => {
       item.addEventListener("click", (event) => {
         for (let date of document.querySelectorAll(".calender__item--this")) {
           const curDay = +event.target.childNodes[0].innerHTML;
+
           if (+date.innerHTML === curDay) {
             date.classList.add("calender__item--active");
+
             CalendarView.setMemoDate(viewYear, viewMonth, curDay);
+
+            const memo = LocalStorage.getMemo(
+              new Date(viewYear, viewMonth, curDay),
+            );
+
+            CalendarView.setMemo(memo);
           } else {
             date.classList.remove("calender__item--active");
           }
@@ -74,6 +88,24 @@ export default class Calendar {
     // 날짜 배열 생성
     dates.push(...prevDates, ...thisDates, ...nextDates);
     return dates;
+  }
+
+  static getDatesOfMemo(date) {
+    const curYear = date.getFullYear();
+    const curMonth = date.getMonth();
+    const list = LocalStorage.getList();
+    const days = list
+      .map((info) => {
+        if (info[0] !== "girlSchedule" && info[0] !== "boySchedule") {
+          const obj = JSON.parse(info[1]);
+          const date = new Date(obj.date);
+          if (date.getFullYear() === curYear && date.getMonth() === curMonth) {
+            return date.getDate();
+          }
+        }
+      })
+      .filter((item) => item !== undefined);
+    return days;
   }
 
   /**

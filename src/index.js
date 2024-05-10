@@ -7,14 +7,29 @@ import { SCHEDULE_TYPE } from "./constants/schedule";
 import Calender from "./utils/calender";
 import DatePlanner from "./utils/datePlanner";
 import HighLighter from "./utils/highlighter";
+import LocalStorage from "./utils/localstorage";
+import CalendarView from "./utils/calenderView";
 class App {
   constructor() {
     this.date = new Date();
-    this.boyfriend = SCHEDULE_TYPE.dayShift;
-    this.girlfriend = SCHEDULE_TYPE.dayShift;
+    const schedules = LocalStorage.getSchedules();
+    this.boyfriend = schedules.boySchedule;
+    this.girlfriend = schedules.girlSchedule;
+    CalendarView.initailChooser(this.boyfriend, this.girlfriend);
+    console.log(this.boyfriend, this.girlfriend);
 
-    // this.DatePlanner = datePlanner;
-    // this.HighLighter = highLighter;
+    // 캘린더 초기화
+    Calender.initial(this.date);
+
+    const memo = LocalStorage.getMemo(
+      new Date(
+        this.date.getFullYear(),
+        this.date.getMonth(),
+        this.date.getDate(),
+      ),
+    );
+
+    CalendarView.setMemo(memo);
 
     // 셀렉트 이벤트 리스너 등록 (남친, 여친 근무표 업데이트)
     tags.$boyfriendChooser.addEventListener("change", (event) =>
@@ -25,16 +40,13 @@ class App {
       this.selectHandler(event, "girlfriend"),
     );
 
-    // 버튼 이벤트 리스너 등록 (데이트 가능 날짜 계산 후 하이라이팅)
+    // 하이라이팅 버튼 이벤트 리스너 등록 (데이트 가능 날짜 계산 후 하이라이팅)
     tags.$checkDateButton.addEventListener(
       "click",
       this.highLightHandler.bind(this),
     );
 
-    // 달력 초기화
-    Calender.initial(this.date);
-
-    // 달력 이동 버튼 이벤트 리스너 등록
+    // 캘린더 이동 버튼 이벤트 리스너 등록
     tags.$prevButton.addEventListener("click", () => {
       const prevDate = Calender.prevMonth(this.date);
       this.date = prevDate;
@@ -49,6 +61,25 @@ class App {
       Calender.goToday();
       this.date = new Date();
     });
+
+    // 메모 저장 버튼 이벤트 리스너 등록
+    tags.$memoSaveBtn.addEventListener("click", () => {
+      const selectDateStr = tags.$memoDate.innerHTML
+        .replace(/\s+/g, "")
+        .replace(/[년월]/g, "-")
+        .replace(/일/g, "");
+
+      const selectDate = new Date(selectDateStr);
+      const inputValue = tags.$memoInput.value;
+      const memoInfo = JSON.stringify({
+        date: selectDate,
+        memo: inputValue,
+      });
+
+      LocalStorage.setItem(selectDateStr, memoInfo);
+      const list = Calender.getDatesOfMemo(this.date);
+      CalendarView.displayMemoDates(list);
+    });
   }
 
   /**
@@ -58,8 +89,14 @@ class App {
    */
   selectHandler(event, chooserType) {
     const SELECT_TYPE = SCHEDULE_TYPE[event.target.value];
-    if (chooserType === "boyfriend") this.boyfriend = SELECT_TYPE;
-    if (chooserType === "girlfriend") this.girlfriend = SELECT_TYPE;
+    if (chooserType === "boyfriend") {
+      this.boyfriend = SELECT_TYPE;
+      LocalStorage.setBoyShedule(event.target.value);
+    }
+    if (chooserType === "girlfriend") {
+      this.girlfriend = SELECT_TYPE;
+      LocalStorage.setGirlShedule(event.target.value);
+    }
   }
 
   /**
@@ -100,8 +137,5 @@ class App {
     HighLighter.addClassName(dateDays);
   }
 }
-
-// const datePlanner = new DatePlanner();
-// const highLighter = new HighLighter();
 
 new App();

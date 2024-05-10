@@ -52,20 +52,6 @@ export default class DatePlanner {
       }
       i++;
     }
-    // new Array(Days).fill(0).map((_, i) => {
-    //   if (boyPattern[i] === "X" && girlPattern[i] === "X") {
-    //     dateDays.push(i + 1);
-    //     if (
-    //       (boyPattern[i + 1] === "X" && girlPattern[i + 1] === "X") ||
-    //       (boyPattern[i + 1] === "X" && girlPattern[i + 1] === "N") ||
-    //       (boyPattern[i + 1] === "N" && girlPattern[i + 1] === "X") ||
-    //       (boyPattern[i + 1] === "N" && girlPattern[i + 1] === "N")
-    //     ) {
-    //       dateDays.push(i + 1);
-    //       dateDays.push(i + 2);
-    //     }
-    //   }
-    // });
 
     return dateDays;
   }
