@@ -1,16 +1,9 @@
-import { $calenderBodyItems } from "../constants/tags";
-
 export default class HighLighter {
-  constructor() {
-    // 날짜 태그들 가져오기
-    this.tags = $calenderBodyItems;
-  }
-
   /**
    * 하이라이팅 관련 클래스명 초기화
    */
-  initialClassName() {
-    this.tags.forEach((tag) => {
+  static initialClassName() {
+    document.querySelectorAll(".calender__item--body").forEach((tag) => {
       tag.classList.remove("calender__item--body-highlight");
       tag.classList.remove("calender__item--body-double-highlight");
     });
@@ -20,19 +13,26 @@ export default class HighLighter {
    * 하이라이팅 클래스명 추가
    * @param {[number]} days 데이트 가능 날짜 배열
    */
-  addClassName(days) {
-    for (let i = 0; i < days.length; i++) {
-      if (days[i + 1] === days[i] + 1) {
-        this.tags[days[i] - 1].classList.add(
+  static addClassName(days) {
+    days.map((day) => {
+      const $thisDays = document.querySelectorAll(".calender__item--this");
+      if (
+        $thisDays[day - 1].parentNode.classList.contains(
+          "calender__item--body-highlight",
+        )
+      ) {
+        console.log("들어옴");
+        $thisDays[day - 1].parentNode.classList.remove(
+          "calender__item--body-highlight",
+        );
+        $thisDays[day - 1].parentNode.classList.add(
           "calender__item--body-double-highlight",
         );
-        this.tags[days[i + 1] - 1].classList.add(
-          "calender__item--body-double-highlight",
+      } else {
+        $thisDays[day - 1].parentNode.classList.add(
+          "calender__item--body-highlight",
         );
-        i = i + 1;
-      } else if (typeof days[i] === "number") {
-        this.tags[days[i] - 1].classList.add("calender__item--body-highlight");
       }
-    }
+    });
   }
 }

@@ -5,6 +5,8 @@ import { SCHEDULE_TYPE } from "./constants/schedule";
 // import DatePlanner from "./utils/datePlanner";
 // import HighLighter from "./utils/highlighter";
 import Calender from "./utils/calender";
+import DatePlanner from "./utils/datePlanner";
+import HighLighter from "./utils/highlighter";
 class App {
   constructor() {
     this.date = new Date();
@@ -24,15 +26,10 @@ class App {
     );
 
     // 버튼 이벤트 리스너 등록 (데이트 가능 날짜 계산 후 하이라이팅)
-    // tags.$checkDateButton.addEventListener("click", () => {
-    //   const days = this.DatePlanner.findDay({
-    //     boyfriend: this.boyfriend,
-    //     girlfriend: this.girlfriend,
-    //   });
-
-    //   this.HighLighter.initialClassName();
-    //   this.HighLighter.addClassName(days);
-    // });
+    tags.$checkDateButton.addEventListener(
+      "click",
+      this.highLightHandler.bind(this),
+    );
 
     // 달력 초기화
     Calender.initial(this.date);
@@ -63,6 +60,44 @@ class App {
     const SELECT_TYPE = SCHEDULE_TYPE[event.target.value];
     if (chooserType === "boyfriend") this.boyfriend = SELECT_TYPE;
     if (chooserType === "girlfriend") this.girlfriend = SELECT_TYPE;
+  }
+
+  /**
+   * 하이라이트 버튼 핸들러
+   */
+  highLightHandler() {
+    const firstDay = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
+    const countDays = new Date(
+      this.date.getFullYear(),
+      this.date.getMonth(),
+      0,
+    ).getDate();
+    console.log(countDays);
+    const diff = DatePlanner.getDiffInDays(firstDay);
+    const startIdx_boy = DatePlanner.getStartIdxOfPattern(this.boyfriend, diff);
+    const startIdx_girl = DatePlanner.getStartIdxOfPattern(
+      this.girlfriend,
+      diff,
+    );
+    const pattern_boy = DatePlanner.getMonthPattern(
+      this.boyfriend,
+      startIdx_boy,
+      countDays,
+    );
+    const pattern_girl = DatePlanner.getMonthPattern(
+      this.girlfriend,
+      startIdx_girl,
+      countDays,
+    );
+    const dateDays = DatePlanner.findDatedays(
+      pattern_boy,
+      pattern_girl,
+      countDays,
+    );
+    console.log(diff, dateDays);
+    console.log(pattern_boy, pattern_girl);
+    HighLighter.initialClassName();
+    HighLighter.addClassName(dateDays);
   }
 }
 
