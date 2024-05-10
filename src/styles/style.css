@@ -154,21 +154,14 @@
 }
 
 .calender__item--active {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: var(--color-white);
-}
-
-.calender__item--active::before {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1.5rem;
-  height: 1.5rem;
-  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
   background-color: black;
-  z-index: -1;
-  content: '';
   border-radius: 1rem;
 }
 
