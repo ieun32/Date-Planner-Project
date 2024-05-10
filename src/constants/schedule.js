@@ -2,7 +2,7 @@
 const dayShift = "XDDDDDX"; // 7일이 1사이클
 const twoShift_1 = "DDNNXX"; // 6일이 1사이클
 const twoShift_2 = "XXDDNN";
-const twoShift_3 = "DDNNXX";
+const twoShift_3 = "NNXXDD";
 const threeShift_1 = "XAAAXXMMMXXNNNX"; //15일이 1사이클
 const threeShift_2 = "XXNNNXXAAAXXMMM";
 const threeShift_3 = "AXXMMMXXNNNXXAA";
