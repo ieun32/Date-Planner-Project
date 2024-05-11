@@ -1,19 +1,16 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es6: true,
     node: true,
   },
-  extends: [
-    "eslint:recommended",
-    "plugin:prettier/recommended"
-  ],
+  extends: ["eslint:recommended", "plugin:prettier/recommended"],
   // 운영체제 별로 다른 개행 문자 자동 인식
   rules: {
-    'prettier/prettier': [
-      'error',
+    "prettier/prettier": [
+      "error",
       {
-        endOfLine: 'auto',
+        endOfLine: "auto",
       },
     ],
   },
@@ -23,5 +20,5 @@ module.exports = {
     sourceType: "module",
   },
   // config 파일은 esling, prettier 검사 통과
-  ignorePatterns: [".eslintrc.js", "webpack.config.js", "dist"],
+  ignorePatterns: ["dist"],
 };

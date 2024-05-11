@@ -11,6 +11,11 @@ import LocalStorage from "./utils/localstorage";
 import CalendarView from "./utils/calenderView";
 class App {
   constructor() {
+    async function 테스트() {
+      const res = await fetch("https://google.com");
+      return res;
+    }
+    console.log(테스트());
     this.date = new Date();
     const schedules = LocalStorage.getSchedules();
     this.boyfriend = schedules.boySchedule;
